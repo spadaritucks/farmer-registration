@@ -1,6 +1,7 @@
 "use client"
 import Button from "@/components/button/component";
 import { useRouter } from "next/navigation";
+import "./styles.css"
 
 export default function Home() {
 
@@ -8,6 +9,7 @@ export default function Home() {
 
   return (
     <section className="farmers-list">
+      <h1>Cadastro e Listagem dos Agricultores</h1>
       <div className="list-container">
         <div className="actions">
           <Button name="Cadastrar Agricultor" variant="success" onClick={() => router.push("/register")} />
