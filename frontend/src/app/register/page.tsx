@@ -1,4 +1,5 @@
 'use client'
+import React, { useEffect } from "react";
 import Button from "@/components/button/component";
 import Input from "@/components/input/component";
 import { UsersService } from "@/services/UsersService";
@@ -15,8 +16,13 @@ import { useCPF } from "@/utils/useCPF";
 
 
 const RegisterSchema = z.object({
-    fullName: z.string({ message: "O nome completo é obrigatório" }),
-    cpf: z.string({ message: "CPF é obrigatório" }),
+    fullName: z.string()
+        .min(8, "O nome completo é obrigatório")
+        .max(60, "O nome completo não pode ultrapassar os 60 caracteres"),
+    cpf: z.string()
+        .min(14, "O CPF é obrigatório")
+        .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/ , "CPF inválido! Use o formato 000.000.000-00")
+        .trim(),
     birthDate: z.optional(z.string()),
     phone: z.optional(z.string()),
 
@@ -27,17 +33,21 @@ type RegisterFormData = z.infer<typeof RegisterSchema>
 export default function Register() {
 
 
-    const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm<RegisterFormData>({
+    const { register, handleSubmit, formState: { isSubmitting, errors }, setValue } = useForm<RegisterFormData>({
         resolver: zodResolver(RegisterSchema)
     })
 
     const router = useRouter()
 
-    const {cpf,handleChange} = useCPF()
+    const { cpf, handleChange } = useCPF()
+
+
+    useEffect(() => {
+        setValue("cpf", cpf)
+    }, [cpf, setValue])
 
 
     async function SubmitForm(data: RegisterFormData) {
-        console.log(data)
         try {
             await UsersService.create({
                 fullName: data.fullName,
@@ -50,9 +60,10 @@ export default function Register() {
             toast.success("Agricultor Cadastrado com Sucesso")
 
         } catch (error: any) {
-            toast.error(error)
+            toast.error(error.message)
         }
     }
+
 
 
     return (
