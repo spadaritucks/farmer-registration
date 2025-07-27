@@ -1,0 +1,20 @@
+button {
+    padding: 10px 15px;
+    border-radius: 20px;
+    color : var(--color-white)
+}
+
+.default{
+   background-color: var(--color-blue-500) ;
+   border: none;
+}
+
+.success{
+    background-color: var(--color-green-500) ;
+    border: none;
+}
+
+.destructive{
+    background-color: var( --color-red-400) ;
+    border: none;
+}
