@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersRequestDTO } from './dto/users.request.dto';
 import { UsersRequestUpdateDTO } from './dto/users.request.update.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UsersResponseDTO } from './dto/users.response.dto';
 
@@ -11,18 +11,19 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>
+    private readonly usersRepository: MongoRepository<User>
   ) { }
 
 
 
   create(userRequestDTO: UsersRequestDTO) {
 
-    const userExists = this.usersRepository.findOne({ where: { cpf: userRequestDTO.cpf } })
+    // const userExists = this.usersRepository.findOne({ where: { cpf: userRequestDTO.cpf } })
+    // console.log(userExists)
 
-    if (userExists != null) {
-      throw new HttpException("O Usuario já existe!", HttpStatus.CONFLICT)
-    }
+    // if (userExists != null) {
+    //   throw new HttpException("O Usuario já existe!", HttpStatus.CONFLICT)
+    // }
 
     const user = this.usersRepository.create({
       fullName: userRequestDTO.fullName,
@@ -38,7 +39,7 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.usersRepository.find();
   }
 
   findOne(id: number) {

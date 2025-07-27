@@ -11,8 +11,6 @@ import { User } from './users/entities/user.entity';
       type : "mongodb",
       host : "localhost",
       port: 27017,
-      username: 'root',
-      password: 'root',
       database: 'farmer-registration',
       entities: [User],
       synchronize: true,

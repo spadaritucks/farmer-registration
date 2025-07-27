@@ -15,8 +15,8 @@ export class UsersRequestDTO {
     cpf: string
 
     @IsOptional()
-    @IsDate()
-    birthDate: Date
+    @IsString()
+    birthDate: string
 
 
     @IsOptional()

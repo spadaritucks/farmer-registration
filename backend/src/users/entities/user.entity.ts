@@ -1,17 +1,19 @@
-import { Column, CreateDateColumn, ObjectId, ObjectIdColumn, UpdateDateColumn } from "typeorm";
+import { ObjectId } from "mongodb";
+import { Column, CreateDateColumn, Entity, ObjectIdColumn, UpdateDateColumn } from "typeorm";
 
+@Entity("users")
 export class User {
 
     @ObjectIdColumn()
     _id: ObjectId
 
-    @Column({name : "full_name"})
+    @Column()
     fullName: string
 
     @Column({unique : true})
     cpf: string
 
-    @Column({name : "birth_date"})
+    @Column()
     birthDate: Date
 
     @Column()
