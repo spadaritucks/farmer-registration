@@ -1,10 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { UsersRequestDTO } from './dto/users.request.dto';
 import { UsersRequestUpdateDTO } from './dto/users.request.update.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository, Repository } from 'typeorm';
+import { MongoRepository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { UsersResponseDTO } from './dto/users.response.dto';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class UsersService {
@@ -16,14 +16,13 @@ export class UsersService {
 
 
 
-  create(userRequestDTO: UsersRequestDTO) {
+  async create(userRequestDTO: UsersRequestDTO) {
 
-    // const userExists = this.usersRepository.findOne({ where: { cpf: userRequestDTO.cpf } })
-    // console.log(userExists)
+    const userExists = await this.usersRepository.findOneBy({ cpf: userRequestDTO.cpf })
 
-    // if (userExists != null) {
-    //   throw new HttpException("O Usuario já existe!", HttpStatus.CONFLICT)
-    // }
+    if (userExists != null) {
+      throw new HttpException("O Usuario já existe!", HttpStatus.CONFLICT)
+    }
 
     const user = this.usersRepository.create({
       fullName: userRequestDTO.fullName,
@@ -46,8 +45,26 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, usersRequestUpdateDTO: UsersRequestUpdateDTO) {
-    return `This action updates a #${id} user`;
+  async update(id: string, usersRequestUpdateDTO: UsersRequestUpdateDTO) {
+    const userExists = await this.usersRepository.findOneBy({ _id: new ObjectId(id) });
+    
+    if (!userExists) {
+      throw new NotFoundException(`O Usuario com o id ${id} não existe!`);
+    }
+
+    const updatedUser = await this.usersRepository.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          fullName: usersRequestUpdateDTO.fullName,
+          birthDate: usersRequestUpdateDTO.birthDate,
+          phone: usersRequestUpdateDTO.phone
+        }
+      },
+      { returnDocument: 'after' }
+    );
+
+    return updatedUser;
   }
 
   remove(id: number) {

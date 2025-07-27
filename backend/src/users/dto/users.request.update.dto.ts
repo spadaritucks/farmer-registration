@@ -1,4 +1,4 @@
-import { IsDate, IsString, Length, Matches } from "class-validator"
+import { IsDate, IsOptional, IsDateString, IsString, Length, Matches } from "class-validator"
 
 export class UsersRequestUpdateDTO {
 
@@ -8,8 +8,9 @@ export class UsersRequestUpdateDTO {
     fullName: string
 
 
-    @IsDate()
-    birthDate: Date
+    @IsOptional()
+    @IsDateString({}, { message: "Data de nascimento inválida. Use o formato YYYY-MM-DD." })
+    birthDate: string;
 
     @IsString()
     @Matches(/^\(?\d{2}\)?\s?\d{5}-\d{4}$/, {
