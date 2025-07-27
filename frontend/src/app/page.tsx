@@ -21,15 +21,20 @@ export default function Home() {
               <th>CPF</th>
               <th>Data de Nascimento</th>
               <th>Status</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {Array.from({length : 10}).map((_,index) => (
-              <tr key={index}> 
+            {Array.from({ length: 10 }).map((_, index) => (
+              <tr key={index}>
                 <td>Thiago Henrique</td>
                 <td>000.000.000.00</td>
                 <td>29/11/2002</td>
                 <td>Ativo</td>
+                <td className="table-actions">
+                  <Button name="Editar" variant="default" onClick={() => router.push(`/update?id=${index}`)} />
+                  <Button name="Deletar" variant="destructive" />
+                </td>
               </tr>
             ))}
           </tbody>
