@@ -1,5 +1,5 @@
 export type UserResponseDTO = {
-    id: string
+    _id: string
     fullName : string
     cpf : string
     birthDate? : string 

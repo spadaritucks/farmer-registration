@@ -41,7 +41,7 @@ export class UsersService {
         return data
     }
 
-    static async update(id: string, userRequestUpdateDTO: UserRequestUpdateDTO) {
+    static async update(id: string | null, userRequestUpdateDTO: UserRequestUpdateDTO) {
         const response = await fetch(`http://localhost:8000/users/${id}`, {
             headers: {
                 "Content-Type": "application/json"

@@ -1,7 +1,6 @@
 import { UsersService } from "@/services/UsersService";
 import "./styles.css"
 import FarmersTableList from "@/components/farmers-table-list/component";
-import { UserResponseDTO } from "@/DTOs/UserResponseDTO";
 
 export default  async function Home() {
 
