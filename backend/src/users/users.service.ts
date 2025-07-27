@@ -47,7 +47,7 @@ export class UsersService {
 
   async update(id: string, usersRequestUpdateDTO: UsersRequestUpdateDTO) {
     const userExists = await this.usersRepository.findOneBy({ _id: new ObjectId(id) });
-    
+
     if (!userExists) {
       throw new NotFoundException(`O Usuario com o id ${id} não existe!`);
     }
@@ -67,7 +67,14 @@ export class UsersService {
     return updatedUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const userExists = await this.usersRepository.findOneBy({ _id: new ObjectId(id) });
+
+    if (!userExists) {
+      throw new NotFoundException(`O Usuario com o id ${id} não existe!`);
+    }
+
+     return await this.usersRepository.findOneAndDelete({_id : new ObjectId(id)})
+
   }
 }
