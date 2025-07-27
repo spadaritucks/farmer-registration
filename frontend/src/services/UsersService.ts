@@ -11,11 +11,12 @@ export class UsersService {
             body : JSON.stringify(userRequestDTO)
         })
 
+        const data = await response.json()
+
         if(!response.ok){
-            throw new Error("Erro no Servidor")
+            throw new Error(data.message)
         }
 
-        const data = await response.json()
         
         return data
     }
