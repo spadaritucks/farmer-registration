@@ -1,45 +1,17 @@
-"use client"
-import Button from "@/components/button/component";
-import { useRouter } from "next/navigation";
+import { UsersService } from "@/services/UsersService";
 import "./styles.css"
+import FarmersTableList from "@/components/farmers-table-list/component";
+import { UserResponseDTO } from "@/DTOs/UserResponseDTO";
 
-export default function Home() {
+export default  async function Home() {
 
-  const router = useRouter()
+  const users  = await UsersService.getAll()
+
 
   return (
     <section className="farmers-list">
       <h1>Cadastro e Listagem dos Agricultores</h1>
-      <div className="list-container">
-        <div className="actions">
-          <Button name="Cadastrar Agricultor" variant="success" onClick={() => router.push("/register")} />
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome Completo</th>
-              <th>CPF</th>
-              <th>Data de Nascimento</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <tr key={index}>
-                <td>Thiago Henrique</td>
-                <td>000.000.000.00</td>
-                <td>29/11/2002</td>
-                <td>Ativo</td>
-                <td className="table-actions">
-                  <Button name="Editar" variant="default" onClick={() => router.push(`/update?id=${index}`)} />
-                  <Button name="Deletar" variant="destructive" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <FarmersTableList users={users}/>
     </section>
   )
 }

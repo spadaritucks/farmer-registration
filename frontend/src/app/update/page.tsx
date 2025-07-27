@@ -8,37 +8,35 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import "./styles.css"
 import { useRouter } from "next/navigation";
+import { FormError } from "@/components/formError/component";
 
 
 
-const RegisterSchema = z.object({
+const UpdateSchema = z.object({
     fullName: z.string(),
-    cpf: z.string(),
     birthDate: z.optional(z.string()),
     phone: z.optional(z.string()),
 
 })
 
-type RegisterFormData = z.infer<typeof RegisterSchema>
+type UpdateFormData = z.infer<typeof UpdateSchema>
 
-export default function Register() {
+export default function Update() {
 
 
-    const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm<RegisterFormData>({
-        resolver: zodResolver(RegisterSchema)
+    const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm<UpdateFormData>({
+        resolver: zodResolver(UpdateSchema)
     })
 
     const router = useRouter()
 
 
-    async function SubmitForm(data: RegisterFormData) {
+    async function SubmitForm(data: UpdateFormData) {
         try {
-            await UsersService.create({
+            await UsersService.update({
                 fullName: data.fullName,
-                cpf: data.cpf,
                 birthDate: data.birthDate && new Date(data.birthDate).toISOString(),
                 phone: data.phone,
-                active: true
             })
 
         } catch (error: any) {
@@ -51,10 +49,25 @@ export default function Register() {
         <section className="farmer-form">
             <h2>Editar Agricultor</h2>
             <form onSubmit={handleSubmit(SubmitForm)}>
-                <Input label="Nome Completo" type="text" {...register("fullName")} />
-                <Input label="CPF" type="text" {...register("cpf")} />
-                <Input label="Data de Nascimento" type="date" {...register("birthDate")} />
-                <Input label="Telefone" type="text" {...register("phone")} />
+                <Input
+                    label="Nome Completo"
+                    type="text"
+                    placeholder="Marcelo da Silva Sousa"
+                    {...register("fullName")}
+                />
+                {errors.fullName && <FormError message={errors.fullName.message} />}
+                <Input
+                    label="Data de Nascimento"
+                    type="date"
+                    {...register("birthDate")} />
+                {errors.birthDate && <FormError message={errors.birthDate.message} />}
+                <Input
+                    label="Telefone"
+                    type="text"
+                    placeholder="(11) 99999-9999"
+                    {...register("phone")}
+                />
+                {errors.phone && <FormError message={errors.phone.message} />}
 
                 <div className="form-actions">
                     <Button type="submit" name="Enviar" variant="success" disabled={isSubmitting} />
