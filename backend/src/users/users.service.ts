@@ -43,9 +43,14 @@ export class UsersService {
       ...(active !== undefined && { active: active === 'true' ? true : false }),
       ...(cpf && { cpf }),
     };
-  
+    
+    if(!fullName  && !active && !cpf){
+      return this.usersRepository.find();
+    }
+
     return this.usersRepository.find({ where: filters });
   }
+
 
   findOne(id: number) {
     return `This action returns a #${id} user`;
