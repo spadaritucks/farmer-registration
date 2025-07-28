@@ -33,10 +33,8 @@ import {
       example: '(11) 91234-5678',
       description: 'Telefone do usuário no formato (99) 99999-9999',
     })
+    @IsOptional()
     @IsString()
-    @Matches(/^\(?\d{2}\)?\s?\d{5}-\d{4}$/, {
-      message: 'Telefone inválido. Use o formato (99) 99999-9999',
-    })
     phone: string;
   
     @ApiProperty({

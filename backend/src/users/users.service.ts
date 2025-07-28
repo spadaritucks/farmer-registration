@@ -37,7 +37,7 @@ export class UsersService {
 
   }
 
-  async findAll(fullName?: string, active?: string, cpf?: string) {
+  async findByQueryString(fullName?: string, active?: string, cpf?: string) {
     const filters = {
       ...(fullName && { fullName: { $regex: fullName, $options: 'i' } }),
       ...(active !== undefined && { active: active === 'true' ? true : false }),
@@ -52,8 +52,8 @@ export class UsersService {
   }
 
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findAll() {
+    return this.usersRepository.find()
   }
 
   async update(id: string, usersRequestUpdateDTO: UsersRequestUpdateDTO) {

@@ -29,17 +29,23 @@ export class UsersController {
     return this.usersService.create(UsersRequestDTO);
   }
 
-  @Get()
+  @Get("/by-query")
   @ApiOperation({ summary: 'Lista todos os usuários com filtros opcionais' })
   @ApiQuery({ name: 'fullName', required: false })
   @ApiQuery({ name: 'cpf', required: false })
   @ApiQuery({ name: 'active', required: false })
-  findAll(
+  findByQueryString(
     @Query('fullName') fullName?: string,
     @Query('active') active?: string,
     @Query('cpf') cpf?: string,
   ) {
-    return this.usersService.findAll(fullName, active, cpf);
+    return this.usersService.findByQueryString(fullName, active, cpf);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Lista todos os usuários' })
+  findAll(){
+    return this.usersService.findAll()
   }
 
 
