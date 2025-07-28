@@ -5,7 +5,7 @@ import { UserResponseDTO } from "@/DTOs/UserResponseDTO";
 export class UsersService {
 
     static async getAll() : Promise<UserResponseDTO[]>{
-        const response = await fetch(`http://localhost:8000/users`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -24,7 +24,7 @@ export class UsersService {
 
 
     static async getUsersByQueryString(fullName? : string, cpf? : string, active?: string) : Promise<UserResponseDTO[]>{
-        const response = await fetch(`http://localhost:8000/users/by-query?fullName=${fullName}&cpf=${cpf}&active=${active}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/by-query?fullName=${fullName}&cpf=${cpf}&active=${active}`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -41,7 +41,7 @@ export class UsersService {
     }
 
     static async create(userRequestDTO: UserRequestDTO) {
-        const response = await fetch("http://localhost:8000/users", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -60,7 +60,7 @@ export class UsersService {
     }
 
     static async update(id: string | null, userRequestUpdateDTO: UserRequestUpdateDTO) {
-        const response = await fetch(`http://localhost:8000/users/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -79,7 +79,7 @@ export class UsersService {
     }
 
     static async delete(id: string | null) {
-        const response = await fetch(`http://localhost:8000/users/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
