@@ -59,4 +59,24 @@ export class UsersService {
 
         return data
     }
+
+    static async delete(id: string | null) {
+        const response = await fetch(`http://localhost:8000/users/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "DELETE",
+
+        })
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.message)
+        }
+
+
+        return data
+    }
+
+
 }
