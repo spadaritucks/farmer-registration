@@ -5,7 +5,7 @@ type InputAtributtes = InputHTMLAttributes<HTMLInputElement>
 
 
 interface InputProps extends InputAtributtes {
-    label: string
+    label?: string
 }
 
 

@@ -5,8 +5,8 @@ import { UserResponseDTO } from "@/DTOs/UserResponseDTO";
 export class UsersService {
 
 
-    static async getAll() : Promise<UserResponseDTO[]>{
-        const response = await fetch("http://localhost:8000/users", {
+    static async getAll(fullName? : string, cpf? : string, active?: string) : Promise<UserResponseDTO[]>{
+        const response = await fetch(`http://localhost:8000/users?fullName=${fullName}&cpf=${cpf}&active=${active}`, {
             headers: {
                 "Content-Type": "application/json"
             },

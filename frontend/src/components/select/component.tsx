@@ -5,7 +5,7 @@ type SelectAtributtes = SelectHTMLAttributes<HTMLSelectElement>
 
 
 interface SelectProps extends SelectAtributtes {
-    label: string
+    label?: string
 }
 
 
