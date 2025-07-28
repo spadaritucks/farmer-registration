@@ -75,6 +75,12 @@ export class UsersService {
       throw new NotFoundException(`O Usuario com o id ${id} não existe!`);
     }
 
+    const userInactive = await this.usersRepository.findOneBy({_id: new ObjectId(id), active : true})
+
+    if(userInactive){
+      throw new HttpException("Não é possivel excluir usuarios ativos!", HttpStatus.BAD_REQUEST)
+    }
+
      return await this.usersRepository.findOneAndDelete({_id : new ObjectId(id)})
 
   }
