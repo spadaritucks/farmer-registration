@@ -39,10 +39,11 @@ export class UsersService {
 
   async findByQueryString(fullName?: string, active?: string, cpf?: string) {
     const filters = {
-      ...(fullName && { fullName: { $regex: fullName, $options: 'i' } }),
-      ...(active !== undefined && { active: active === 'true' ? true : false }),
-      ...(cpf && { cpf }),
+      ...(fullName?.trim() && { fullName: { $regex: fullName.trim(), $options: 'i' } }),
+      ...(active !== undefined && { active: active === 'true' }),
+      ...(cpf?.trim() && { cpf: { $regex: cpf.trim(), $options: 'i' } }),
     };
+    
     
     if(!fullName  && !active && !cpf){
       return this.usersRepository.find();
