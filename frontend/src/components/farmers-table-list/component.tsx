@@ -22,7 +22,6 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
     const { openModal, hideModal } = useModal()
     const { cpf, handleChange } = useCPF()
     const [fullName, setFullName] = useState<string | null>(null)
-    const [CPF, setCPF] = useState<string | null>(null)
     const [active, setActive] = useState<string | null>(null)
 
     const searchParams = useSearchParams()
@@ -30,7 +29,7 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
     function setFilters () {
         const params = new URLSearchParams(searchParams.toString())
         fullName && params.set("fullName", fullName)
-        CPF &&  params.set("cpf", cpf)
+        cpf && params.set("cpf", cpf)
         active && params.set("active", active)
       
         router.push("?" + params.toString());
