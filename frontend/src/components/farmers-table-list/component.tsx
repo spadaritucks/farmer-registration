@@ -30,6 +30,7 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
 
             await UsersService.delete(_id)
             toast.success("Usuario Deletado com Sucesso")
+            hideModal()
 
         }catch(error: any){
             toast.error(error.message)
@@ -59,7 +60,7 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
                             <td>{user.cpf}</td>
                             <td>{user.birthDate ? new Date(user.birthDate).toLocaleDateString("pt-br") : "Não Consta"}</td>
                             <td>{user.phone ? user.phone : "Não Consta"}</td>
-                            <td>{user.active}</td>
+                            <td>{user.active === true ? "Ativo" : "Inativo"}</td>
                             <td className="table-actions">
                                 <Button name="Editar" variant="default" onClick={() => router.push(`/update?id=${user._id}`)} />
                                 <Button name="Deletar" variant="destructive" onClick={() => HandleConfirmDelete(user._id)}   />

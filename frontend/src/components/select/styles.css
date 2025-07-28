@@ -1,4 +1,4 @@
-.select-wrapper{
+.input-wrapper{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -15,7 +15,7 @@ label{
   }
 
 
-select{
+input{
     width: 100%;
     padding: 10px 15px;
     background-color: var(--gray-600);
@@ -24,7 +24,7 @@ select{
     border: none;
 }
 
-select:focus{
+input:focus{
     border: 2px solid var(--blue-900);
     outline: none;
     transition: 0.1s all;
