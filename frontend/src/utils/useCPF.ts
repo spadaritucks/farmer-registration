@@ -5,7 +5,7 @@ export function useCPF(initialValue = '') {
   const [cpf, setCpf] = useState(formatCpf(initialValue))
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const rawValue = e.target.value.replace(/\D/g, '').slice(0, 11) // apenas números, máx 11 dígitos
+    const rawValue = e.target.value.replace(/\D/g, '').slice(0, 11) 
     setCpf(formatCpf(rawValue))
   }
 
@@ -19,6 +19,7 @@ export function useCPF(initialValue = '') {
   return {
     cpf,
     handleChange,
+    setCpf
   }
 }
 

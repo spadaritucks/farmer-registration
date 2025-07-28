@@ -20,28 +20,31 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
 
     const router = useRouter()
     const { openModal, hideModal } = useModal()
-    const { cpf, handleChange } = useCPF()
+    const { cpf, handleChange, setCpf } = useCPF()
     const [fullName, setFullName] = useState<string | null>(null)
     const [active, setActive] = useState<string | null>(null)
 
     const searchParams = useSearchParams()
 
-    function setFilters () {
+    function setFilters() {
         const params = new URLSearchParams(searchParams.toString())
-        fullName && params.set("fullName", fullName)
-        cpf && params.set("cpf", cpf)
-        active && params.set("active", active)
-      
+        fullName && params.set("fullName", fullName.trim())
+        cpf && params.set("cpf", cpf.trim())
+        active && params.set("active", active.trim())
+
         router.push("?" + params.toString());
     }
 
-    function clearFilters (){
+    function clearFilters() {
         const params = new URLSearchParams(searchParams.toString())
         params.delete("fullName")
         params.delete("cpf")
         params.delete("active")
+        setFullName(null)
+        setActive(null)
+        setCpf("")
         router.push("?" + params.toString());
-       
+
     }
 
     function HandleConfirmDelete(_id: string) {
@@ -84,8 +87,9 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
                         onChange={handleChange}
                     />
                     <Select
-                      onChange={(e) => setActive(e.target.value)}
-                      defaultValue={"Selecione o Status"}
+                        onChange={(e) => setActive(e.target.value)}
+                        value={active ?? "Selecione o Status"}
+                        
                     >
                         <option value="Selecione o Status" disabled>Selecione o Status</option>
                         <option value="true">Ativo</option>
