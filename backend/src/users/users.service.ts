@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { UsersRequestDTO } from './dto/users.request.dto';
 import { UsersRequestUpdateDTO } from './dto/users.request.update.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository } from 'typeorm';
+import { Like, MongoRepository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { ObjectId } from 'mongodb';
 
@@ -37,8 +37,14 @@ export class UsersService {
 
   }
 
-  findAll() {
-    return this.usersRepository.find();
+  async findAll(fullName?: string, active?: string, cpf?: string) {
+    const filters = {
+      ...(fullName && { fullName: { $regex: fullName, $options: 'i' } }),
+      ...(active !== undefined && { active: active === 'true' ? true : false }),
+      ...(cpf && { cpf }),
+    };
+  
+    return this.usersRepository.find({ where: filters });
   }
 
   findOne(id: number) {
