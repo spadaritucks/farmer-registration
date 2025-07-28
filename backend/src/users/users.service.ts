@@ -58,7 +58,8 @@ export class UsersService {
         $set: {
           fullName: usersRequestUpdateDTO.fullName,
           birthDate: usersRequestUpdateDTO.birthDate,
-          phone: usersRequestUpdateDTO.phone
+          phone: usersRequestUpdateDTO.phone,
+          active : usersRequestUpdateDTO.active
         }
       },
       { returnDocument: 'after' }

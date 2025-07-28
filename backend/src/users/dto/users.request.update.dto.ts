@@ -1,4 +1,4 @@
-import { IsDate, IsOptional, IsDateString, IsString, Length, Matches } from "class-validator"
+import { IsDate, IsOptional, IsDateString, IsString, Length, Matches, IsBoolean } from "class-validator"
 
 export class UsersRequestUpdateDTO {
 
@@ -17,6 +17,10 @@ export class UsersRequestUpdateDTO {
         message : "Telefone inválido. Use o formato (99) 99999-9999"
     })
     phone: string
+
+
+    @IsBoolean({ message: "O campo 'active' deve ser verdadeiro ou falso." })
+    active: boolean;
 
 
     
