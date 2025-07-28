@@ -1,6 +1,7 @@
 # Desafio Técnico – Cadastro de Agricultor
 ## Tecnologias usadas
-- Backend : NestJS + TypeORM e MongoDB
+- Backend : NestJS + TypeORM + Swagger (OpenAPI)
+- Banco de Dados : MongoDB
 - Frontend : NextJS
 
 ## Instruções para rodar o projeto localmente
