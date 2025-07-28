@@ -4,9 +4,27 @@ import { UserResponseDTO } from "@/DTOs/UserResponseDTO";
 
 export class UsersService {
 
+    static async getAll() : Promise<UserResponseDTO[]>{
+        const response = await fetch(`http://localhost:8000/users`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
 
-    static async getAll(fullName? : string, cpf? : string, active?: string) : Promise<UserResponseDTO[]>{
-        const response = await fetch(`http://localhost:8000/users?fullName=${fullName}&cpf=${cpf}&active=${active}`, {
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error(data.message)
+        }
+
+
+        return data
+    }
+
+
+
+    static async getUsersByQueryString(fullName? : string, cpf? : string, active?: string) : Promise<UserResponseDTO[]>{
+        const response = await fetch(`http://localhost:8000/users/by-query?fullName=${fullName}&cpf=${cpf}&active=${active}`, {
             headers: {
                 "Content-Type": "application/json"
             },

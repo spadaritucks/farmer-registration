@@ -8,7 +8,7 @@ export default  async function Home({ searchParams }: { searchParams: { [key: st
   const cpf = searchParams.cpf || "";
   const active = searchParams.active  || "";
 
-  const users  = await UsersService.getAll(fullName, cpf, active)
+  const users  = await UsersService.getUsersByQueryString(fullName, cpf, active)
 
 
   return (

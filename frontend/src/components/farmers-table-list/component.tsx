@@ -58,6 +58,7 @@ export default function FarmersTableList({ users }: FarmersTableListProps) {
             await UsersService.delete(_id)
             toast.success("Usuario Deletado com Sucesso")
             hideModal()
+            router.refresh()
 
         } catch (error: any) {
             toast.error(error.message)
