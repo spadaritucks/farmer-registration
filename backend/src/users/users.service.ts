@@ -43,7 +43,8 @@ export class UsersService {
       ...(active !== undefined && { active: active === 'true' }),
       ...(cpf?.trim() && { cpf: { $regex: cpf.trim(), $options: 'i' } }),
     };
-    
+   
+   
     
     if(!fullName  && !active && !cpf){
       return this.usersRepository.find();
